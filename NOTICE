@@ -1,0 +1,21 @@
+OpenTraduko
+Copyright (C) 2026 Verlintas
+
+This project is licensed under the GNU General Public License v3.0 or later.
+See the LICENSE file for the full license text.
+
+Third-party components:
+
+- Vosk API (com.alphacephei:vosk-android) — Apache License 2.0
+  https://github.com/alphacep/vosk-api
+- Vosk speech recognition models — Apache License 2.0 (small cn/en models)
+  https://alphacephei.com/vosk/models
+- JNA (net.java.dev.jna) — Apache License 2.0 / LGPL 2.1
+  https://github.com/java-native-access/jna
+- Google ML Kit on-device translation — Google APIs Terms of Service /
+  ML Kit Terms of Service
+  https://developers.google.com/ml-kit/terms
+- AndroidX / Jetpack Compose — Apache License 2.0
+  https://developer.android.com/jetpack
+- OkHttp — Apache License 2.0
+  https://square.github.io/okhttp/

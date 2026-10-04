@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OpenTraduko</string>
+
+    <string name="home_subtitle">Offline-first simultaneous interpretation: recognition and translation stay on device.</string>
+    <string name="home_mode_conversation_title">Conversation</string>
+    <string name="home_mode_conversation_desc">Phone in the middle, face-to-face two-way translation with a rotated far-side panel</string>
+    <string name="home_mode_listening_title">Listening</string>
+    <string name="home_mode_listening_desc">For lectures, videos and meetings with live source and translated subtitles</string>
+    <string name="home_models">Models</string>
+    <string name="home_history">History</string>
+    <string name="home_settings">Settings</string>
+
+    <string name="action_back">Back</string>
+    <string name="action_start">Start</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_resume">Resume</string>
+    <string name="action_tts_on">Speech output on</string>
+    <string name="action_tts_off">Speech output off</string>
+    <string name="action_switch_speaker">Switch speaker</string>
+    <string name="action_open_session">Open session</string>
+    <string name="action_save">Save</string>
+
+    <string name="status_running">Session running</string>
+    <string name="status_paused">Paused</string>
+    <string name="status_preparing">Loading recognition model…</string>
+
+    <string name="error_model_missing">Recognition model not downloaded. Get it under Models.</string>
+    <string name="error_model_load_failed">Failed to load the recognition model</string>
+    <string name="error_audio_failed">Could not start the microphone. Check permissions.</string>
+    <string name="error_tts_unavailable">No system TTS voice for this language; speech output disabled</string>
+
+    <string name="hint_headphones">Headphones recommended for smoother simultaneous output</string>
+    <string name="hint_tap_panel">Tap a panel to switch the active speaker</string>
+
+    <string name="banner_listening_running">Listening session is running in the background</string>
+    <string name="banner_conversation_running">Conversation session is running in the background</string>
+
+    <string name="conversation_title">Conversation</string>
+    <string name="conversation_idle_hint">Pick both languages to start. Put the phone between you and tap your side while speaking.</string>
+    <string name="language_my">My language</string>
+    <string name="language_partner">Partner language</string>
+
+    <string name="listening_title">Listening</string>
+    <string name="listening_empty">Listening…</string>
+    <string name="listening_idle_hint">Pick the spoken language and output language, then start. Great for lectures, videos and meetings.</string>
+    <string name="language_source">Spoken language</string>
+    <string name="language_target">Output language</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_languages">Languages</string>
+    <string name="settings_section_speech">Speech</string>
+    <string name="settings_section_display">Display</string>
+    <string name="settings_section_models">Models</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_tts">Speech output</string>
+    <string name="settings_tts_desc">Read translations aloud</string>
+    <string name="settings_speech_rate">Speech rate</string>
+    <string name="settings_duplex">Duplex mode</string>
+    <string name="settings_duplex_desc">Without headphones the app stays half-duplex: recognition pauses during playback to avoid echo</string>
+    <string name="settings_duplex_auto">Auto</string>
+    <string name="settings_duplex_half">Half</string>
+    <string name="settings_duplex_full">Full</string>
+    <string name="settings_text_size">Subtitle size</string>
+    <string name="settings_text_small">Small</string>
+    <string name="settings_text_medium">Medium</string>
+    <string name="settings_text_large">Large</string>
+    <string name="settings_keep_screen_on">Keep screen on while running</string>
+    <string name="settings_open_models">Model management</string>
+    <string name="settings_open_models_desc">Download or delete recognition and translation models</string>
+    <string name="settings_license">License</string>
+    <string name="settings_github">GitHub project</string>
+
+    <string name="models_title">Models</string>
+    <string name="models_vosk_section">Speech recognition (Vosk · offline)</string>
+    <string name="models_vosk_hint">Models are downloaded per language, work fully offline and are not bundled in the APK.</string>
+    <string name="models_mlkit_section">Translation (ML Kit · offline)</string>
+    <string name="models_mlkit_hint">Models are downloaded per language and work offline once fetched.</string>
+    <string name="models_mlkit_status_downloaded">Downloaded</string>
+    <string name="models_mlkit_status_missing">Not downloaded</string>
+    <string name="models_mlkit_checking">Checking…</string>
+    <string name="models_status_installed">Installed, works offline</string>
+    <string name="models_status_extracting">Extracting…</string>
+    <string name="models_status_failed">Download failed</string>
+    <string name="models_action_download">Download</string>
+    <string name="models_action_delete">Delete</string>
+    <string name="models_mirror_label">Recognition model base URL</string>
+    <string name="models_mirror_hint">Replace with a mirror if needed; defaults to alphacephei.com</string>
+    <string name="models_mlkit_google_note">Note: ML Kit translation models are distributed by Google and may require a proxy in mainland China. Once downloaded they work offline.</string>
+
+    <string name="history_title">History</string>
+    <string name="history_empty">No sessions yet</string>
+    <string name="history_mode_conversation">Conversation</string>
+    <string name="history_mode_listening">Listening</string>
+    <string name="history_segments">%1$d segments</string>
+    <string name="history_export">Export</string>
+    <string name="history_delete">Delete</string>
+    <string name="history_not_found">Session not found</string>
+
+    <string name="notification_channel_name">Interpretation</string>
+    <string name="notification_channel_description">Persistent notification while a session runs</string>
+    <string name="notification_status_listening">Listening…</string>
+    <string name="notification_status_paused">Paused</string>
+    <string name="notification_status_speaking">Speaking the translation…</string>
+    <string name="notification_pause">Pause</string>
+    <string name="notification_resume">Resume</string>
+    <string name="notification_stop">Stop</string>
+</resources>
