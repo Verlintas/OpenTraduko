@@ -117,6 +117,10 @@ class ModelsViewModel(
         }
     }
 
+    fun updateSettings(transform: (AppSettings) -> AppSettings) {
+        viewModelScope.launch { container.settings.update(transform) }
+    }
+
     companion object {
         fun factory(container: AppContainer): ViewModelProvider.Factory = viewModelFactory {
             initializer {

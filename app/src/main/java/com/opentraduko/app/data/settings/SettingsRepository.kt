@@ -31,6 +31,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.opentraduko.app.core.model.DuplexMode
 import com.opentraduko.app.core.model.Language
 import com.opentraduko.app.core.model.TextScale
+import com.opentraduko.app.core.model.TranslationEngineKind
 import java.io.IOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -63,7 +64,12 @@ class SettingsRepository(context: Context) {
             preferences[KEY_DUPLEX_MODE] = updated.duplexMode.name
             preferences[KEY_TEXT_SCALE] = updated.textScale.name
             preferences[KEY_MODEL_MIRROR] = updated.modelMirrorBaseUrl
+            preferences[KEY_USE_HF_MIRROR] = updated.useHfMirror
             preferences[KEY_KEEP_SCREEN_ON] = updated.keepScreenOn
+            preferences[KEY_TRANSLATION_ENGINE] = updated.translationEngine.name
+            preferences[KEY_OPENAI_BASE_URL] = updated.openAiBaseUrl
+            preferences[KEY_OPENAI_API_KEY] = updated.openAiApiKey
+            preferences[KEY_OPENAI_MODEL] = updated.openAiModel
         }
     }
 
@@ -81,7 +87,14 @@ class SettingsRepository(context: Context) {
             textScale = this[KEY_TEXT_SCALE]?.let { runCatching { TextScale.valueOf(it) }.getOrNull() }
                 ?: defaults.textScale,
             modelMirrorBaseUrl = this[KEY_MODEL_MIRROR]?.takeIf { it.isNotBlank() } ?: defaults.modelMirrorBaseUrl,
+            useHfMirror = this[KEY_USE_HF_MIRROR] ?: defaults.useHfMirror,
             keepScreenOn = this[KEY_KEEP_SCREEN_ON] ?: defaults.keepScreenOn,
+            translationEngine = this[KEY_TRANSLATION_ENGINE]
+                ?.let { runCatching { TranslationEngineKind.valueOf(it) }.getOrNull() }
+                ?: defaults.translationEngine,
+            openAiBaseUrl = this[KEY_OPENAI_BASE_URL] ?: defaults.openAiBaseUrl,
+            openAiApiKey = this[KEY_OPENAI_API_KEY] ?: defaults.openAiApiKey,
+            openAiModel = this[KEY_OPENAI_MODEL] ?: defaults.openAiModel,
         )
     }
 
@@ -95,6 +108,11 @@ class SettingsRepository(context: Context) {
         val KEY_DUPLEX_MODE = stringPreferencesKey("duplex_mode")
         val KEY_TEXT_SCALE = stringPreferencesKey("text_scale")
         val KEY_MODEL_MIRROR = stringPreferencesKey("model_mirror")
+        val KEY_USE_HF_MIRROR = booleanPreferencesKey("use_hf_mirror")
         val KEY_KEEP_SCREEN_ON = booleanPreferencesKey("keep_screen_on")
+        val KEY_TRANSLATION_ENGINE = stringPreferencesKey("translation_engine")
+        val KEY_OPENAI_BASE_URL = stringPreferencesKey("openai_base_url")
+        val KEY_OPENAI_API_KEY = stringPreferencesKey("openai_api_key")
+        val KEY_OPENAI_MODEL = stringPreferencesKey("openai_model")
     }
 }

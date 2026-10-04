@@ -45,6 +45,18 @@ enum class Language(
 
     val voskModelFile: String get() = "$voskModelName.zip"
 
+    /**
+     * Optional community mirror hosted on hf-mirror.com, which is reachable
+     * and fast from mainland China. Only languages with a known mirror have a
+     * non-null value.
+     */
+    val hfMirrorUrl: String?
+        get() = when (this) {
+            CHINESE -> "https://hf-mirror.com/guloooovoooo/vosk-model-small-cn/resolve/main/vosk-model-small-cn.zip"
+            ENGLISH -> "https://hf-mirror.com/ambind/vosk-model-small-en-us-0.15/resolve/main/vosk-model-small-en-us-0.15_c_.zip"
+            else -> null
+        }
+
     val isCjk: Boolean get() = this == CHINESE || this == JAPANESE || this == KOREAN
 
     /** Separator used when composing several translated clauses into one text. */

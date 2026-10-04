@@ -29,8 +29,9 @@ import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
- * On-device translation backed by ML Kit translation models. Models are
- * downloaded once per language pair and then work offline.
+ * On-device translation backed by ML Kit translation models. Models must be
+ * downloaded through [ensureModels]; [translate] never triggers a download
+ * itself so a missing model fails fast instead of stalling the pipeline.
  */
 class MlKitTranslationEngine : TranslationEngine {
 
@@ -50,13 +51,7 @@ class MlKitTranslationEngine : TranslationEngine {
 
     override suspend fun translate(text: String, from: Language, to: Language): String {
         if (from == to || text.isBlank()) return text
-        val translator = client(from, to)
-        return try {
-            translator.translate(text).await()
-        } catch (t: Throwable) {
-            translator.downloadModelIfNeeded().await()
-            translator.translate(text).await()
-        }
+        return client(from, to).translate(text).await()
     }
 
     override suspend fun ensureModels(from: Language, to: Language): Result<Unit> {

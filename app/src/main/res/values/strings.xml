@@ -33,6 +33,8 @@
 
     <string name="hint_headphones">建议佩戴耳机以获得更连贯的同传体验</string>
     <string name="hint_tap_panel">点击任一栏可切换当前说话人</string>
+    <string name="status_translation_not_ready">翻译引擎未就绪，正在重试…</string>
+    <string name="status_translation_failed">翻译失败</string>
 
     <string name="banner_listening_running">聆听模式正在后台运行</string>
     <string name="banner_conversation_running">对话模式正在后台运行</string>
@@ -50,6 +52,16 @@
 
     <string name="settings_title">设置</string>
     <string name="settings_section_languages">语言</string>
+    <string name="settings_section_translation">翻译引擎</string>
+    <string name="settings_engine_mlkit">离线 ML Kit（免费）</string>
+    <string name="settings_engine_openai">OpenAI 兼容 API</string>
+    <string name="settings_engine_hint">大陆网络通常无法下载 ML Kit 翻译模型，可改用任意 OpenAI 兼容接口（DeepSeek、通义千问、SiliconFlow、本地 Ollama 等）。Key 仅保存在本机。</string>
+    <string name="settings_openai_base_url">接口地址</string>
+    <string name="settings_openai_api_key">API Key</string>
+    <string name="settings_openai_model">模型名称</string>
+    <string name="settings_openai_hint">示例：DeepSeek https://api.deepseek.com/v1 + deepseek-chat；Ollama http://局域网IP:11434/v1</string>
+    <string name="action_show_api_key">显示</string>
+    <string name="action_hide_api_key">隐藏</string>
     <string name="settings_section_speech">语音播报</string>
     <string name="settings_section_display">显示</string>
     <string name="settings_section_models">模型</string>
@@ -87,6 +99,8 @@
     <string name="models_action_delete">删除</string>
     <string name="models_mirror_label">识别模型下载地址</string>
     <string name="models_mirror_hint">可替换为镜像地址，默认使用 alphacephei.com</string>
+    <string name="models_hf_mirror">使用 hf-mirror 镜像（大陆推荐）</string>
+    <string name="models_hf_mirror_hint">仅中英识别模型提供镜像；官方源较慢时可开启</string>
     <string name="models_mlkit_google_note">提示：ML Kit 翻译模型由 Google 分发，中国大陆网络可能需要代理才能下载；下载完成后可离线使用。</string>
 
     <string name="history_title">历史记录</string>

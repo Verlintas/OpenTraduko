@@ -45,6 +45,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -122,6 +123,18 @@ fun ModelsScreen(
             item {
                 HorizontalDivider()
                 SectionHeader(stringResource(R.string.models_mirror_label))
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.models_hf_mirror)) },
+                    supportingContent = { Text(stringResource(R.string.models_hf_mirror_hint)) },
+                    trailingContent = {
+                        Switch(
+                            checked = settings.useHfMirror,
+                            onCheckedChange = { enabled ->
+                                viewModel.updateSettings { it.copy(useHfMirror = enabled) }
+                            },
+                        )
+                    },
+                )
                 Column(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),

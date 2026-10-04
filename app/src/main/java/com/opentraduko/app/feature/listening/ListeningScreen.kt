@@ -265,12 +265,24 @@ private fun StatusLine(state: InterpretationState) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.error,
         )
+        !state.translationReady -> Text(
+            text = translationStatusText(state),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.error,
+        )
         state.running && !state.fullDuplex -> Text(
             text = stringResource(R.string.hint_headphones),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
+}
+
+@Composable
+private fun translationStatusText(state: InterpretationState): String {
+    val base = stringResource(R.string.status_translation_not_ready)
+    val detail = state.translationError?.takeIf { it.isNotBlank() }
+    return if (detail == null) base else "$base ($detail)"
 }
 
 @Composable

@@ -33,6 +33,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
@@ -40,17 +42,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -59,7 +68,9 @@ import com.opentraduko.app.R
 import com.opentraduko.app.core.model.DuplexMode
 import com.opentraduko.app.core.model.Language
 import com.opentraduko.app.core.model.TextScale
+import com.opentraduko.app.core.model.TranslationEngineKind
 import com.opentraduko.app.data.AppContainer
+import com.opentraduko.app.data.settings.AppSettings
 import com.opentraduko.app.feature.session.SessionViewModel
 import com.opentraduko.app.ui.components.LanguagePicker
 
@@ -113,6 +124,39 @@ fun SettingsScreen(
                 selected = settings.listeningTarget,
                 onSelect = { language -> viewModel.updateSettings { it.copy(listeningTarget = language) } },
             )
+
+            HorizontalDivider()
+            SectionHeader(stringResource(R.string.settings_section_translation))
+            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
+                        selected = settings.translationEngine == TranslationEngineKind.ML_KIT,
+                        onClick = {
+                            viewModel.updateSettings { it.copy(translationEngine = TranslationEngineKind.ML_KIT) }
+                        },
+                        label = { Text(stringResource(R.string.settings_engine_mlkit)) },
+                    )
+                    FilterChip(
+                        selected = settings.translationEngine == TranslationEngineKind.OPENAI_COMPATIBLE,
+                        onClick = {
+                            viewModel.updateSettings { it.copy(translationEngine = TranslationEngineKind.OPENAI_COMPATIBLE) }
+                        },
+                        label = { Text(stringResource(R.string.settings_engine_openai)) },
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.settings_engine_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+            }
+            if (settings.translationEngine == TranslationEngineKind.OPENAI_COMPATIBLE) {
+                OpenAiSettingsFields(
+                    settings = settings,
+                    onUpdate = viewModel::updateSettings,
+                )
+            }
 
             HorizontalDivider()
             SectionHeader(stringResource(R.string.settings_section_speech))
@@ -256,4 +300,81 @@ private fun textScaleLabel(scale: TextScale): String = when (scale) {
     TextScale.SMALL -> stringResource(R.string.settings_text_small)
     TextScale.MEDIUM -> stringResource(R.string.settings_text_medium)
     TextScale.LARGE -> stringResource(R.string.settings_text_large)
+}
+
+@Composable
+private fun OpenAiSettingsFields(
+    settings: AppSettings,
+    onUpdate: ((AppSettings) -> AppSettings) -> Unit,
+) {
+    var baseUrl by remember { mutableStateOf(settings.openAiBaseUrl) }
+    var apiKey by remember { mutableStateOf(settings.openAiApiKey) }
+    var model by remember { mutableStateOf(settings.openAiModel) }
+    var synced by remember { mutableStateOf(false) }
+    var keyVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(settings) {
+        if (!synced) {
+            baseUrl = settings.openAiBaseUrl
+            apiKey = settings.openAiApiKey
+            model = settings.openAiModel
+            synced = true
+        }
+    }
+
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        OutlinedTextField(
+            value = baseUrl,
+            onValueChange = { value ->
+                baseUrl = value
+                onUpdate { it.copy(openAiBaseUrl = value) }
+            },
+            label = { Text(stringResource(R.string.settings_openai_base_url)) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        OutlinedTextField(
+            value = model,
+            onValueChange = { value ->
+                model = value
+                onUpdate { it.copy(openAiModel = value) }
+            },
+            label = { Text(stringResource(R.string.settings_openai_model)) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        OutlinedTextField(
+            value = apiKey,
+            onValueChange = { value ->
+                apiKey = value
+                onUpdate { it.copy(openAiApiKey = value) }
+            },
+            label = { Text(stringResource(R.string.settings_openai_api_key)) },
+            singleLine = true,
+            visualTransformation = if (keyVisible) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
+            trailingIcon = {
+                IconButton(onClick = { keyVisible = !keyVisible }) {
+                    Icon(
+                        imageVector = if (keyVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                        contentDescription = stringResource(
+                            if (keyVisible) R.string.action_hide_api_key else R.string.action_show_api_key,
+                        ),
+                    )
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Text(
+            text = stringResource(R.string.settings_openai_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
 }

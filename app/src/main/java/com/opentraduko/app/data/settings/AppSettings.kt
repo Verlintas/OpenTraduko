@@ -22,6 +22,7 @@ package com.opentraduko.app.data.settings
 import com.opentraduko.app.core.model.DuplexMode
 import com.opentraduko.app.core.model.Language
 import com.opentraduko.app.core.model.TextScale
+import com.opentraduko.app.core.model.TranslationEngineKind
 
 data class AppSettings(
     val conversationLangA: Language = Language.CHINESE,
@@ -33,9 +34,16 @@ data class AppSettings(
     val duplexMode: DuplexMode = DuplexMode.AUTO,
     val textScale: TextScale = TextScale.MEDIUM,
     val modelMirrorBaseUrl: String = DEFAULT_MIRROR,
+    val useHfMirror: Boolean = false,
     val keepScreenOn: Boolean = true,
+    val translationEngine: TranslationEngineKind = TranslationEngineKind.ML_KIT,
+    val openAiBaseUrl: String = DEFAULT_OPENAI_BASE_URL,
+    val openAiApiKey: String = "",
+    val openAiModel: String = DEFAULT_OPENAI_MODEL,
 ) {
     companion object {
         const val DEFAULT_MIRROR = "https://alphacephei.com/vosk/models"
+        const val DEFAULT_OPENAI_BASE_URL = "https://api.deepseek.com/v1"
+        const val DEFAULT_OPENAI_MODEL = "deepseek-chat"
     }
 }

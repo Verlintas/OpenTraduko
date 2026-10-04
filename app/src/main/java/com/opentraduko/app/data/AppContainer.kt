@@ -53,7 +53,7 @@ class AppContainer(context: Context) {
 
     val modelManager = AsrModelManager(appContext.filesDir, settings, httpClient)
 
-    val controller = InterpretationController(appContext, history, modelManager, scope)
+    val controller = InterpretationController(appContext, settings, history, modelManager, scope)
 
     fun initialize() {
         scope.launch { runCatching { history.load() } }

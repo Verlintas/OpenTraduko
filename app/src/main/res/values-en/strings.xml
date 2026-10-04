@@ -33,6 +33,8 @@
 
     <string name="hint_headphones">Headphones recommended for smoother simultaneous output</string>
     <string name="hint_tap_panel">Tap a panel to switch the active speaker</string>
+    <string name="status_translation_not_ready">Translation engine not ready, retrying…</string>
+    <string name="status_translation_failed">Translation failed</string>
 
     <string name="banner_listening_running">Listening session is running in the background</string>
     <string name="banner_conversation_running">Conversation session is running in the background</string>
@@ -50,6 +52,16 @@
 
     <string name="settings_title">Settings</string>
     <string name="settings_section_languages">Languages</string>
+    <string name="settings_section_translation">Translation engine</string>
+    <string name="settings_engine_mlkit">Offline ML Kit (free)</string>
+    <string name="settings_engine_openai">OpenAI-compatible API</string>
+    <string name="settings_engine_hint">ML Kit translation models are distributed by Google and often fail to download in mainland China. You can switch to any OpenAI-compatible endpoint (DeepSeek, Qwen, SiliconFlow, local Ollama…). Keys are stored on this device only.</string>
+    <string name="settings_openai_base_url">API base URL</string>
+    <string name="settings_openai_api_key">API key</string>
+    <string name="settings_openai_model">Model name</string>
+    <string name="settings_openai_hint">Examples: DeepSeek https://api.deepseek.com/v1 + deepseek-chat; Ollama http://lan-ip:11434/v1</string>
+    <string name="action_show_api_key">Show</string>
+    <string name="action_hide_api_key">Hide</string>
     <string name="settings_section_speech">Speech</string>
     <string name="settings_section_display">Display</string>
     <string name="settings_section_models">Models</string>
@@ -87,6 +99,8 @@
     <string name="models_action_delete">Delete</string>
     <string name="models_mirror_label">Recognition model base URL</string>
     <string name="models_mirror_hint">Replace with a mirror if needed; defaults to alphacephei.com</string>
+    <string name="models_hf_mirror">Use hf-mirror (recommended in mainland China)</string>
+    <string name="models_hf_mirror_hint">Mirrors exist for Chinese and English models only</string>
     <string name="models_mlkit_google_note">Note: ML Kit translation models are distributed by Google and may require a proxy in mainland China. Once downloaded they work offline.</string>
 
     <string name="history_title">History</string>

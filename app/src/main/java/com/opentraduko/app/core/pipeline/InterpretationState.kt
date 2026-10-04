@@ -51,5 +51,7 @@ data class InterpretationState(
     val ttsSpeaking: Boolean = false,
     val ttsReady: Boolean = true,
     val fullDuplex: Boolean = false,
+    val translationReady: Boolean = true,
+    val translationError: String? = null,
     val status: ControllerStatus? = null,
 )

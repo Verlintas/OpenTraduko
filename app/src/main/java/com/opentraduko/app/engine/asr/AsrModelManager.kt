@@ -76,8 +76,10 @@ class AsrModelManager(
         val modelName = language.voskModelName
         try {
             modelsDir.mkdirs()
-            val base = settings.current().modelMirrorBaseUrl.trimEnd('/')
-            val url = "$base/${language.voskModelFile}"
+            val preferences = settings.current()
+            val base = preferences.modelMirrorBaseUrl.trimEnd('/')
+            val mirrorUrl = if (preferences.useHfMirror) language.hfMirrorUrl else null
+            val url = mirrorUrl ?: "$base/${language.voskModelFile}"
             val archive = File(modelsDir, "$modelName.zip.download")
             archive.delete()
 
@@ -105,6 +107,7 @@ class AsrModelManager(
             modelDir(language).deleteRecursively()
             unzip(archive, modelsDir)
             archive.delete()
+            relocateModel(language)
             if (!isInstalled(language)) throw IOException("model archive is incomplete")
             setState(modelName, DownloadState.Idle)
             true
@@ -123,13 +126,43 @@ class AsrModelManager(
         _downloads.update { it + (modelName to state) }
     }
 
+    /**
+     * Mirrors may unpack into a directory with a different name than the
+     * official model directory. Move the extracted directory to the expected
+     * location so installation checks and Vosk's model path stay stable.
+     */
+    private fun relocateModel(language: Language) {
+        val target = modelDir(language)
+        if (File(target, "am/final.mdl").isFile) return
+        val otherInstalled = Language.entries
+            .filter { it != language && isInstalled(it) }
+            .map { modelDir(it).absolutePath }
+            .toSet()
+        val candidates = modelsDir.listFiles()
+            .orEmpty()
+            .filter { it.isDirectory && File(it, "am/final.mdl").isFile && it.absolutePath !in otherInstalled }
+        val source = candidates.firstOrNull { it.name == language.voskModelName }
+            ?: candidates.firstOrNull()
+            ?: return
+        if (source.absolutePath == target.absolutePath) return
+        target.deleteRecursively()
+        if (!source.renameTo(target)) {
+            runCatching {
+                source.copyRecursively(target, overwrite = true)
+                source.deleteRecursively()
+            }
+        }
+    }
+
     private fun unzip(archive: File, targetDir: File) {
         val canonicalTarget = targetDir.canonicalFile
         ZipInputStream(BufferedInputStream(archive.inputStream())).use { zip ->
             while (true) {
                 val entry = zip.nextEntry ?: break
                 val name = entry.name
-                if (name.contains("__MACOSX") || name.endsWith("/")) {
+                if (name.contains("__MACOSX") || name.endsWith("/") ||
+                    name.endsWith(".DS_Store") || name.contains("/._")
+                ) {
                     zip.closeEntry()
                     continue
                 }

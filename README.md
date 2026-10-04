@@ -11,6 +11,7 @@ An open-source, offline-first simultaneous interpretation app for Android. No ac
 - **对话模式**：手机放中间，上下双栏面对面互译，对侧文字自动旋转 180°
 - **聆听模式**：持续识别外语内容，滚动显示原文与译文，可语音播报
 - **免费优先**：Vosk 离线语音识别 + ML Kit 离线翻译 + 系统 TTS，全程零费用
+- **可选 BYOK 云端翻译**：支持任意 OpenAI 兼容接口（DeepSeek / 通义 / SiliconFlow / 本地 Ollama），大陆无法下载 ML Kit 模型时的替代方案
 - **无 GMS 依赖**：识别与语音合成不依赖 Google 服务，大陆设备可用
 - **半双工防回声**：未戴耳机时自动暂停采集，戴耳机自动切换全双工同传
 - **模型按需下载**：识别模型不打包进 APK，支持自定义镜像地址
@@ -61,15 +62,16 @@ opentraduko.cnMirrors=true
 | `vosk-model-small-en-us-0.15` | 英文识别 | ~40MB | alphacephei.com |
 | ML Kit zh / en | 翻译 | ~30MB | Google |
 
-- Vosk 模型可在设置中自定义下载地址（镜像/离线包）。
-- ML Kit 翻译模型由 Google 分发，中国大陆网络可能需要代理才能下载；下载一次后即可离线使用。
-- 云端翻译引擎（自带 API Key）在路线图 v0.2 中，用于需要更低延迟或更高准确率的场景。
+- Vosk 模型可在模型管理中开启 **hf-mirror 镜像**（中英，大陆下载快），或自定义下载地址。
+- ML Kit 翻译模型由 Google 分发，中国大陆网络通常下载失败；此时可在设置中切换到 **OpenAI 兼容 API**（DeepSeek、通义、SiliconFlow、Ollama 等），Key 仅保存在本机。
+- 识别模型解压时自动兼容镜像包的目录结构。
 
 ## 已知限制 / Known limitations
 
 - Vosk 小模型中文准确率一般（安静环境、清晰发音效果最好）
 - 未连接耳机时采用半双工：播报期间会暂停识别，可能漏听下一句；连接耳机后自动切换全双工
 - 说话人切换目前为手动（点击对应栏），自动语种识别在规划中
+- ML Kit 离线翻译在大陆通常需要代理下载模型，建议改用 OpenAI 兼容接口
 
 ## 隐私 / Privacy
 
